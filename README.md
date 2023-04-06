@@ -15,6 +15,7 @@ N:B => you can check this link: [Dotnet_JWTLogoutAsync](https://github.com) for 
 
 ## Use Case
 - You wish to disable Jwt from authorizing your application before the token expiry time elapse.
+- It can be used with your custom Jwt implementation as well as with ASP.NET Identity.
 
 ## Support
 - .NET Core 6.0 and newer
@@ -32,5 +33,42 @@ Install via Package Manager
 ```bash
 Install-Package dotnet.JWTLogout
 ```
+## Usage
+To enable JWTLogout to listen for requests, use the middleware provided by JWTLogout.  
+Add JWTLogout Namespace in `Program.cs`
 
+```c#
+using JWTLogout.Net.Helpers
+```
+#### Call JWTLogout middleware after app.UseAuthorization() in program.cs;
+
+```c#
+...
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseJWTCheck();
+...
+```
+
+#### Call JwtCheck.Login() method at the bottom of your Login Function/ActionMethod;
+
+```c#
+...
+var jwtCheck = new JwtCheck().Login(generatedJwt);
+...
+```
+
+#### Call JwtCheck.Logout() method at the bottom of your Login Function/ActionMethod;
+
+```c#
+...
+var jwtCheck = new JwtCheck().Logout(httpContext)
+...
+```
+## Contribution
+Feel like something is missing? Fork the repo and send a PR.
+
+Encountered a bug? Fork the repo and send a PR.
+
+Alternatively, open an issue and we'll get to it as soon as we can.
 
