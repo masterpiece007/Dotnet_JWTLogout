@@ -1,5 +1,6 @@
 # Dotnet_JWTLogout
-
+[![JWTLogout](https://img.shields.io/badge/JWTLogout-blueviolet)](https://github.com/masterpiece007/Dotnet_JWTLogout)
+[![Version](https://img.shields.io/nuget/vpre/JWTLogout?color=orange)](https://www.nuget.org/packages/JWTLogout.Net)
 ## Introduction
 Never trust anything coming from the client-side they said, but why you are still trusting the client-side to handle your application logout properly and effectively,
 when all he did, was delete the stored jwt from the browser local storage.  
