@@ -11,7 +11,7 @@ This package aims to help you handle your logout process seamlessly with just 3 
 ~> var jwtCheck = new JwtCheck().Logout(httpContext); in your logout method  
 ~> app.UseJWTCheck(); in your program.cs 
 
-N:B => you can check this link: [Dotnet_JWTLogoutAsync](https://github.com) for the async method equivalent  
+N:B => you can check this link: [Dotnet_JWTLogoutAsync](https://github.com/masterpiece007/Dotnet_JWTLogoutAsync) for the async method equivalent  
 
 ## Use Case
 - You wish to disable Jwt from authorizing your application before the token expiry time elapse.
