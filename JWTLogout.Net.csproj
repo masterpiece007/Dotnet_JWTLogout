@@ -7,15 +7,25 @@
     <Title>JWTLogout.Net</Title>
     <Authors>Quadri Ajagbe</Authors>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Description>With only 3 lines of code, this package seeks to help you manage your jwt logout procedure smoothly.
-you can't entrust the client-side with the logout task on your application, because deleting the saved jwt in the browser local storage is not sufficient/efficient,
+    <Description>This package seeks to help you manage your jwt logout process smoothly with only 3 lines of code, . 
+It works with both ASP.NET Identity and your Custom JWT implementation
+You can't entrust the client-side with the logout task on your application, because deleting the saved jwt in the browser local storage is not sufficient/efficient,
 as such jwt can be copied and used for authentication on another computer or browser before it expires.</Description>
     <PackageProjectUrl>https://github.com/masterpiece007/Dotnet_JWTLogout</PackageProjectUrl>
     <RepositoryUrl>https://github.com/masterpiece007/Dotnet_JWTLogout</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>jwt;auth;logout;jwtlogout.net;dotnet.logout;.net_logout;.netlogout;logout.net;dotnetlogout;authlogout;auth.logout</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.4</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\JWTLogoutAsync.Net\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="LiteDB" Version="4.1.4" />

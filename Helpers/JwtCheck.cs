@@ -11,10 +11,12 @@ namespace JWTLogout.Net.Helpers
     {
         //private LiteDatabaseAsync db;
         private LiteDatabase db;
+        private string dbname;
 
         public JwtCheck()
         {
-            var dbPath = Path.Combine(Directory.GetCurrentDirectory(), "JwtStore.db");
+            dbname = "xJwtStore.db";
+            var dbPath = Path.Combine(Directory.GetCurrentDirectory(), dbname);
             db = new LiteDatabase(dbPath);
         }
       
@@ -32,8 +34,8 @@ namespace JWTLogout.Net.Helpers
             var jwtExpiry = FetchJwtExpiry(jwt);
             if (string.IsNullOrEmpty(jwtExpiry))
                 return "jwt expiry time not found";
-          
-            var dbPath = Path.Combine(Directory.GetCurrentDirectory(), "JwtStore.db");
+
+            var dbPath = Path.Combine(Directory.GetCurrentDirectory(), dbname);
             using (var db = new LiteDatabase(dbPath))
             {
                 var collection = db.GetCollection<TokenStore>();
@@ -42,7 +44,8 @@ namespace JWTLogout.Net.Helpers
                 {
                     IsLoggedOut = false,
                     Jwt = jwt,
-                    ExpiryTime = jwtExpiry
+                    ExpiryTime = jwtExpiry,
+                    Username = FetchJwtUsername(jwt)
                 };
 
                 var rowsInserted = collection.Insert(newJwt);
@@ -83,7 +86,7 @@ namespace JWTLogout.Net.Helpers
             if (string.IsNullOrEmpty(jwt))
                 return "empty jwt";
 
-            var dbPath = Path.Combine(Directory.GetCurrentDirectory(), "JwtStore.db");
+            var dbPath = Path.Combine(Directory.GetCurrentDirectory(), dbname);
             using (var db = new LiteDatabase(dbPath))
             {
                 var collection = db.GetCollection<TokenStore>();
@@ -204,6 +207,47 @@ namespace JWTLogout.Net.Helpers
                 return new DateTime(1970, 1, 1, 0, 0, 0, 0)
                     .AddSeconds(double.Parse(expiryTime))
                     .ToString("MM/dd/yyyy HH:mm:ss");
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public bool HasValidSession(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+                return false;
+            var now = DateTime.Now;
+            var collection = db.GetCollection<TokenStore>();
+            var notExpiredTime =  collection.Find(a =>
+                    a.Username.ToLower() == username.ToLower() && now < DateTime.Parse(a.ExpiryTime));  
+            
+            var isNotLoggedOut =  collection.Find(a =>
+                    a.Username.ToLower() == username.ToLower() && a.IsLoggedOut == false );
+            db.Dispose();
+            if (notExpiredTime.Count() > 0)
+                return true;
+            if (isNotLoggedOut.Count() > 0)
+                return true;
+
+            return false;
+
+
+        }
+
+        internal static string FetchJwtUsername(string jwt)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(jwt))
+                    return null;
+
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(jwt);
+                var tokenS = jsonToken as JwtSecurityToken;
+
+                var username = tokenS.Claims.FirstOrDefault(claim => claim.Type.ToLower() == "username")?.Value;
+                return username;
             }
             catch (Exception ex)
             {
