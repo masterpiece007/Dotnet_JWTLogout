@@ -1,5 +1,6 @@
 # Dotnet_JWTLogout
-
+[![JWTLogout](https://img.shields.io/badge/JWTLogout-blueviolet)](https://github.com/masterpiece007/Dotnet_JWTLogout)
+[![Version](https://img.shields.io/nuget/vpre/JWTLogout?color=orange)](https://www.nuget.org/packages/JWTLogout.Net)
 ## Introduction
 Never trust anything coming from the client-side they said, but why you are still trusting the client-side to handle your application logout properly and effectively,
 when all he did, was delete the stored jwt from the browser local storage.  
@@ -11,7 +12,7 @@ This package aims to help you handle your logout process seamlessly with just 3 
 ~> var jwtCheck = new JwtCheck().Logout(httpContext); in your logout method  
 ~> app.UseJWTCheck(); in your program.cs 
 
-N:B => you can check this link: [Dotnet_JWTLogoutAsync](https://github.com) for the async method equivalent  
+N:B => you can check this link: [Dotnet_JWTLogoutAsync](https://github.com/masterpiece007/Dotnet_JWTLogoutAsync) for the async method equivalent  
 
 ## Use Case
 - You wish to disable Jwt from authorizing your application before the token expiry time elapse.
@@ -26,12 +27,12 @@ You can clone this repo and reference it in your project.
 Install via .NET CLI
 
 ```bash
-dotnet add package dotnet.JWTLogout
+dotnet add package JWTLogout.Net --version 1.0.1
 ```
 Install via Package Manager
 
 ```bash
-Install-Package dotnet.JWTLogout
+Install-Package JWTLogout.Net -Version 1.0.1
 ```
 ## Usage
 To enable JWTLogout to listen for requests, use the middleware provided by JWTLogout.  
@@ -58,7 +59,7 @@ var jwtCheck = new JwtCheck().Login(generatedJwt);
 ...
 ```
 
-#### Call JwtCheck.Logout() method at the bottom of your Login Function/ActionMethod;
+#### Call JwtCheck.Logout() method at the bottom of your Logout Function/ActionMethod;
 
 ```c#
 ...
